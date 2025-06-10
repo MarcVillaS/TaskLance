@@ -18,6 +18,7 @@ app.use('/api/users', users);
 app.use('/api/projects', projects);
 app.use('/api/tasks', tasks);
 
-app.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
