@@ -216,11 +216,14 @@ function cargarMensajes() {
 $(function() {
     cargarMensajes();
     setInterval(cargarMensajes, 3000);
+
+    // Clip abre el selector de archivos
     $('.adjuntar-archivo-btn').on('click', function(e) {
         e.preventDefault();
         $(this).closest('.adjuntar-label').find('input[type="file"]').click();
     });
 
+    // Mostrar nombre del archivo seleccionado
     $('.archivo-input').on('change', function() {
         const file = this.files[0];
         const $label = $(this).closest('.adjuntar-label').find('.nombre-archivo-adjunto');

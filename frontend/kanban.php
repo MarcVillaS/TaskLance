@@ -477,35 +477,10 @@ overflow-x: hidden;
     </div>
 </div>
 
+<!-- SortableJS para drag and drop móvil y escritorio -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script>
-
-document.querySelectorAll('.column').forEach(col => {
-    new Sortable(col, {
-        group: 'kanban',
-        animation: 150,
-        draggable: ".task-card",
-        onEnd: function (evt) {
-            const el = evt.item;
-            const taskId = el.getAttribute('data-task-id');
-            const newStatus = evt.to.getAttribute('data-status');
-            if (evt.from !== evt.to) {
-                fetch(`kanban.php?oferta_id=<?= $oferta_id; ?>&update_task_id=$
-                {taskId}&new_status=${newStatus}`, {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error en la actualización');
-                })
-                .catch(err => {
-                    alert('Error al actualizar la tarea');
-                    location.reload();
-                });
-            }
-            }
-        });
-    });
-
+    // Eliminar tarea
     document.querySelectorAll('.delete-task').forEach(icon => {
         icon.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -523,6 +498,33 @@ document.querySelectorAll('.column').forEach(col => {
                         alert("Error al eliminar la tarea.");
                         console.error(err);
                     });
+            }
+        });
+    });
+
+    // DRAG & DROP móvil y escritorio con SortableJS, SOLO .task-card
+    document.querySelectorAll('.column').forEach(col => {
+        new Sortable(col, {
+            group: 'kanban',
+            animation: 150,
+            draggable: ".task-card",
+            onEnd: function (evt) {
+                const el = evt.item;
+                const taskId = el.getAttribute('data-task-id');
+                const newStatus = evt.to.getAttribute('data-status');
+                // Solo si cambió de columna...
+                if (evt.from !== evt.to) {
+                    fetch(`kanban.php?oferta_id=<?= $oferta_id; ?>&update_task_id=${taskId}&new_status=${newStatus}`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error en la actualización');
+                    })
+                    .catch(err => {
+                        alert('Error al actualizar la tarea');
+                        location.reload();
+                    });
+                }
             }
         });
     });

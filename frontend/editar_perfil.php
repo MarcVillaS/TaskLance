@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Avatar cache busting
 $avatar_path = $user['avatar'] ?: 'img/default-avatar.png';
 $avatar_version = file_exists($avatar_path) ? filemtime($avatar_path) : time();
 ?>

@@ -7,8 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 $pageTitle = "Proyectos";
 
 $user_id = $_SESSION['user_id'];
-$projects = file_get_contents(
-    "http://localhost:3000/api/projects/assigned/$user_id");
+$projects = file_get_contents("http://localhost:3000/api/projects/assigned/$user_id");
 $projects = json_decode($projects, true);
 
 include 'componentes/header.php';

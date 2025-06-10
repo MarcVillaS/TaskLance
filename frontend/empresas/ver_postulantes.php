@@ -157,6 +157,7 @@ include 'componentes/header.php';
             text-decoration: underline;
         }
 
+        /* -- Responsive Table to Cards -- */
         @media (max-width: 700px) {
             .container {
                 padding: 8px 1px;
